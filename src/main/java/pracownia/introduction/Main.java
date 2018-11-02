@@ -1,30 +1,32 @@
 package pracownia.introduction;
 
 
+import java.text.Collator;
+import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main extends Thread {
-    public static Map<String, String> cities = new HashMap<>();
+    public static Map<String, String> cities = new LinkedHashMap<>();
 
 
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws InterruptedException {
 
 
 
-        //zapis
-    //    secondThread t1 = new secondThread(cities);
-   //     t1.start();
-        //zegar
-      thirdThread  t2 = new thirdThread();
-      t2.start();
 
+        secondThread t1 = new secondThread(cities);
+        t1.start();
 
-   //     mainLoop();
+        thirdThread  t2 = new thirdThread();
+        t2.start();
+
+         mainLoop();
     }
 
 
@@ -32,7 +34,7 @@ public class Main extends Thread {
         Scanner s = new Scanner(System.in);
         //Main loop
         while (true) {
-            System.out.println(cities);
+
             System.out.println("Podaj miasto: ");
             String cityName = s.nextLine();
 
@@ -45,8 +47,11 @@ public class Main extends Thread {
             else
                 System.out.println("Błędny PESEL");
 
+
         }
     }
+
+
 //Zapisuje do mapy
     public static void saveToTable(String cityName, String line){
 
@@ -60,7 +65,10 @@ public class Main extends Thread {
             }
         }
         cities.put(line,cityName);
+
     }
+
+
 
     //Sprawdza sumę kontrolną oddaje boolean
     public static boolean checkPESEL(String dataPESEL) {
